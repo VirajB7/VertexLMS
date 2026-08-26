@@ -1,69 +1,98 @@
-import Image from "next/image";
+import React from "react";
+import Link from "next/link";
+import { ArrowRight, Star } from "lucide-react";
+import { PageFrame } from "@/components/layout/page-frame";
+import { SiteHeader } from "@/components/layout/site-header";
+import { Hero } from "@/components/home/hero";
+import { ChartDecoration } from "@/components/home/chart-decoration";
+import { CourseCard } from "@/components/cards/course-card";
+import { NextJsMark, DockerMark, TypeScriptMark } from "@/components/brand/course-marks";
 
-export default function Home() {
+// Placeholder data for courses
+const courses = [
+  {
+    id: "nextjs",
+    title: "Next.js for Production",
+    description: "Build scalable, high-performance web applications with Next.js.",
+    level: "Intermediate",
+    duration: "18h 24m",
+    modulesCount: 12,
+    mark: <NextJsMark />,
+  },
+  {
+    id: "docker",
+    title: "Docker Essentials",
+    description: "Containerize applications and streamline your development workflow.",
+    level: "Beginner",
+    duration: "10h 12m",
+    modulesCount: 8,
+    mark: <DockerMark />,
+  },
+  {
+    id: "typescript",
+    title: "TypeScript Deep Dive",
+    description: "Go beyond the basics and write safer, more expressive code.",
+    level: "Intermediate",
+    duration: "14h 36m",
+    modulesCount: 10,
+    mark: <TypeScriptMark />,
+  },
+];
+
+export default function HomePage() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+    <PageFrame>
+      <SiteHeader />
+      
+      <main className="flex-1 w-full pb-32">
+        <Hero />
+
+        {/* Full bleed hairline divider */}
+        <div className="w-full h-px bg-[var(--color-canvas-line)]" aria-hidden="true" />
+
+        {/* All Courses Section */}
+        <section className="px-6 md:px-[82px] pt-12 pb-16">
+          <div className="flex items-end justify-between mb-8">
+            <h2 className="font-display text-[30px] font-bold text-neutral-900">All Courses</h2>
+            <Link 
+              href="/courses" 
+              className="inline-flex items-center gap-1.5 text-[15px] font-medium text-primary-500 hover:text-primary-600 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 rounded"
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+              View all courses
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {courses.map((course) => (
+              <CourseCard
+                key={course.id}
+                layout="stacked"
+                title={course.title}
+                description={course.description}
+                level={course.level}
+                duration={course.duration}
+                modulesCount={course.modulesCount}
+                className="h-[373px] bg-white border-neutral-200"
+              >
+                {course.mark}
+              </CourseCard>
+            ))}
+          </div>
+        </section>
+
+        {/* Footer Note */}
+        <div className="flex items-center justify-center gap-4 px-6 md:px-[82px] text-neutral-600 mb-8">
+          <div className="flex-1 h-px bg-[var(--color-canvas-line)]" aria-hidden="true" />
+          <div className="flex items-center gap-2">
+            <Star className="w-5 h-5 text-primary-400" />
+            <span className="text-[17px]">New courses and lessons added every week.</span>
+          </div>
+          <div className="flex-1 h-px bg-[var(--color-canvas-line)]" aria-hidden="true" />
         </div>
       </main>
-    </div>
+
+      <ChartDecoration />
+    </PageFrame>
   );
 }

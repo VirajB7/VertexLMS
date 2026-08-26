@@ -10,6 +10,8 @@ export interface CourseCardProps {
   duration?: string;
   modulesCount?: number;
   logoText?: string;
+  layout?: "row" | "stacked";
+  children?: React.ReactNode;
   className?: string;
 }
 
@@ -20,20 +22,41 @@ export function CourseCard({
   duration = "18h 24m",
   modulesCount = 12,
   logoText = "N",
+  layout = "row",
+  children,
   className,
 }: CourseCardProps) {
+  const isStacked = layout === "stacked";
+  
   return (
-    <Card className={cn("flex flex-col justify-between h-full hover:border-neutral-300 transition-colors", className)}>
-      <div className="space-y-4">
+    <Card className={cn(
+      "flex flex-col justify-between h-full hover:border-neutral-300 transition-colors",
+      isStacked ? "p-7" : "", 
+      className
+    )}>
+      <div className={cn("space-y-4", isStacked ? "space-y-6" : "")}>
         {/* Course Logo Tile */}
-        <div className="w-12 h-12 rounded-md bg-neutral-900 flex items-center justify-center text-white font-bold text-xl">
-          {logoText}
-        </div>
+        {children ? (
+          children
+        ) : (
+          <div className={cn(
+            "rounded-md bg-neutral-900 flex items-center justify-center text-white font-bold text-xl",
+            isStacked ? "w-[72px] h-[72px] rounded-2xl" : "w-12 h-12"
+          )}>
+            {logoText}
+          </div>
+        )}
 
         {/* Content */}
         <div className="space-y-1.5">
-          <h3 className="text-heading-3 font-semibold text-neutral-900">{title}</h3>
-          <p className="text-body text-neutral-500 line-clamp-2">{description}</p>
+          <h3 className={cn(
+            "font-semibold text-neutral-900",
+            isStacked ? "font-display text-[22px] leading-tight" : "text-heading-3"
+          )}>{title}</h3>
+          <p className={cn(
+            "text-neutral-500 line-clamp-2",
+            isStacked ? "text-[15px] leading-[25px]" : "text-body"
+          )}>{description}</p>
         </div>
       </div>
 

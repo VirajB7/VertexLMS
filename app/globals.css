@@ -16,6 +16,9 @@
   --color-neutral-100: #F1F5F9;
   --color-neutral-50: #FAFAFC;
 
+  --color-canvas: #fbf8f5;
+  --color-canvas-line: #f0e7e0;
+
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-playfair), ui-serif, Georgia, serif;
 
