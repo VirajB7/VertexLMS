@@ -2,7 +2,8 @@ import React from "react";
 import Link from "next/link";
 import { Bell } from "lucide-react";
 import { Logo } from "@/components/brand/logo";
-import { Avatar } from "@/components/ui/avatar";
+import { SignInButton, SignUpButton, Show, UserButton } from "@clerk/nextjs";
+import { Button } from "@/components/ui/button";
 
 export function SiteHeader() {
   return (
@@ -32,7 +33,19 @@ export function SiteHeader() {
         >
           <Bell className="w-6 h-6 stroke-[1.5px]" />
         </button>
-        <Avatar initials="JD" />
+        <Show when="signed-out">
+          <div className="flex items-center gap-3">
+            <SignInButton mode="modal">
+              <Button variant="tertiary" size="md">Sign in</Button>
+            </SignInButton>
+            <SignUpButton mode="modal">
+              <Button variant="primary" size="md">Sign up</Button>
+            </SignUpButton>
+          </div>
+        </Show>
+        <Show when="signed-in">
+          <UserButton afterSignOutUrl="/" appearance={{ elements: { avatarBox: "w-10 h-10" } }} />
+        </Show>
       </div>
     </header>
   );
